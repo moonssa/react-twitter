@@ -8,7 +8,6 @@ export default function withHandler(
       return res.status(405).end();
     }
     try {
-      console.log("where>>>>");
       await fn(req, res);
     } catch (error) {
       console.log("why????");
