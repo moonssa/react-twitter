@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  email String? @unique
+  password String?
+  phone String? @unique
+  github_id String? @unique
+  avatar String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  SMSToken SMSToken[]
+}
+
+model SMSToken {
+  id Int @id @default(autoincrement())
+  token String @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  user User @relation(fields: [userId], references: [id], onDelete:Cascade)
+  userId Int
+}
+
+// model User {
+//   id Int @id @default(autoincrement())
+//   username String @unique
+//   email String @unique
+//   password String
+//   createdAt DateTime @default(now())
+//   likes Like[]
+//   tweets Tweet[]
+// }
+
+// model Tweet {
+//   id Int @id @default(autoincrement())
+//   createdAt DateTime @default(now())
+//   user User @relation(fields: [userId], references: [id], onDelete:Cascade)
+//   userId Int
+//   payload String
+//   like Like[]
+
+// }
+
+// model Like {
+//   id Int @id @default(autoincrement())
+//   user User @relation(fields: [userId], references: [id], onDelete:Cascade)
+//   userId Int
+//   product Tweet @relation(fields: [tweetId], references: [id], onDelete:Cascade)
+//   tweetId Int
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+
